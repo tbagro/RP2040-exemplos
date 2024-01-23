@@ -1,0 +1,39 @@
+/*O código básico funciona como um relógio simples,
+imprimindo a data e a hora formatadas na comunicação serial 
+a cada segundo. Note que esse relógio não persiste a hora entre
+reinicializações do Pico, pois utiliza a contagem de segundos desde 
+o início da execução do programa.*/
+
+#include "pico/stdlib.h"
+#include <time.h>
+#include <sys/time.h>
+
+void setup() {
+  // Inicializa a comunicação serial para imprimir mensagens de depuração
+  Serial.begin(115200);
+
+  // Aguarda por 5 segundos para garantir que a comunicação serial esteja pronta
+  sleep_ms(5000);
+
+  / Aguarda por 5 segundos para garantir que a comunicação serial esteja pronta struct timeval tv;
+  // Aguarda por 5 segundos para garantir que a comunicação serial esteja pronta
+  gettimeofday(&tv, nullptr);
+  // Aguarda por 5 segundos para garantir que a comunicação serial esteja pronta
+  settimeofday(&tv, nullptr);
+}
+
+void loop() {
+  // Aguarda por 5 segundos para garantir que a comunicação serial esteja pronta
+  time_t now;
+  // Formata o tempo como uma string legível e armazena em buff
+  char buff[80];
+
+  // Obtém o tempo atual em segundos desde a época (1970-01-01 00:00:00 UTC)
+  time(&now);
+  // Formata o tempo como uma string legível (1970-01-01 00:00:00 UTC) e armazena em buff
+  strftime(buff, sizeof(buff), "%c", localtime(&now));
+  // Aguarda por 1 segundo antes de repetir o loop
+  Serial.println(buff);
+    // Aguarda por 1 segundo antes de repetir o loop
+  sleep_ms(1000);
+}
